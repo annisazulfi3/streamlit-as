@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import re
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 import nltk
@@ -168,3 +170,4 @@ if uploaded_file:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
         )
+
