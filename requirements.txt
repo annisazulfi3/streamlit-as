@@ -6,8 +6,10 @@ scikit-learn
 seaborn
 matplotlib
 streamlit
+openpyxl
 indonlp
 wordcloud
+
 
 
 
