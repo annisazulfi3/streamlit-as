@@ -1,0 +1,9 @@
+pandas==2.3.2
+indonlp==0.3.4
+nltk==3.9.1
+numpy==2.3.3
+Sastrawi==1.0.1
+scikit-learn==1.7.2
+seaborn==0.13.2
+streamlit==1.49.1
+matplotlib==3.10.6
