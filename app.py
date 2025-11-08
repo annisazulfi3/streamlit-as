@@ -74,7 +74,7 @@ if uploaded_file:
         st.write("Contoh data:", df.head())
 
         # kamus Inset Lexicon
-        kamus = pd.read_csv('data/kamus.csv', sep='\t')
+        kamus = pd.read_csv('kamus.csv', sep='\t')
         lexicon = dict(zip(kamus['word'], kamus['score']))
 
         # apply prapemrosesan dan pelabelan
@@ -166,4 +166,5 @@ if uploaded_file:
             data=excel_buffer,
             file_name="hasil_sentimen.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
         )
