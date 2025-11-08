@@ -4,8 +4,8 @@ nltk
 Sastrawi
 scikit-learn
 seaborn
-matplotlib
 streamlit
 indonlp
 wordcloud
+
 
