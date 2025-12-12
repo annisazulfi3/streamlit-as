@@ -43,7 +43,7 @@ def preprocess(text):
     tokens = word_tokenize(text)
     #hapus stopword
     tokens = [word for word in tokens if word not in stop_words]
-    #uah ke kata dasar
+    #ubah ke kata dasar
     tokens = [stemmer.stem(word) for word in tokens]
     tokens = [word for word in tokens if word.strip() != ""]
     return ' '.join(tokens)
@@ -66,29 +66,55 @@ uploaded_file = st.file_uploader("Upload file excel (xlsx/xls) dengan kolom 'Opi
 
 if uploaded_file:
     df = pd.read_excel(uploaded_file)
+  
+    # cari semua kolom yang mengandung kata 'Opini'
+    opini_cols = [col for col in df.columns if 'opini' in col.lower()]
     
-    if 'Opini' not in df.columns:
-        st.error("Kolom 'Opini' tidak ditemukan!")
+    if len(opini_cols) == 0:
+        st.error("Tidak ada kolom yang mengandung kata 'Opini'!")
     else:
-        st.success("File berhasil diupload!")
-        st.write("Contoh data:", df.head())
+        st.success(f"Ditemukan {len(opini_cols)} kolom opini: {opini_cols}")
+      
+        temp_name = "_Opini_temp_12345"
+        while temp_name in df.columns:
+            temp_name += "_1"
+
+        # id_vars = semua kolom selain kolom opini
+        id_vars = [col for col in df.columns if col not in opini_cols]
+
+        # UBAH dari lebar → panjang (baris)
+        df_long = df.melt(
+            id_vars=[col for col in df.columns if col not in opini_cols],
+            value_vars=opini_cols,
+            var_name="Kolom_Asal",
+            value_name=temp_name
+        )
+
+        # ganti nama kolom sementara jadi 'Opini'
+        df_long = df_long.rename(columns={temp_name: "Opini"})
+
+        # hapus NA / kosong
+        df_long = df_long.dropna(subset=["Opini"])
+        df_long = df_long[df_long["Opini"].astype(str).str.strip() != ""]
+
+        st.write("Contoh data:", df_long.head())
 
         # kamus Inset Lexicon
         kamus = pd.read_csv('kamus.csv', sep='\t')
         lexicon = dict(zip(kamus['word'], kamus['score']))
 
         # apply prapemrosesan dan pelabelan
-        df['hasil_preprocessing'] = df['Opini'].apply(preprocess)
+        df_long['hasil_preprocessing'] = df_long['Opini'].apply(preprocess)
         
-        df['label_sentimen'] = df['hasil_preprocessing'].apply(lambda x: label_sentiment(x, lexicon))
+        df_long['label_sentimen'] = df_long['hasil_preprocessing'].apply(lambda x: label_sentiment(x, lexicon))
 
         st.subheader("Data setelah prapemrosesan & pelabelan")
-        st.dataframe(df.head()[['hasil_preprocessing', 'label_sentimen']])
+        st.dataframe(df_long.head()[['hasil_preprocessing', 'label_sentimen']])
 
         # pembobotan & splitting
         vectorizer = TfidfVectorizer()
-        X = vectorizer.fit_transform(df['hasil_preprocessing'])
-        y = df['label_sentimen']
+        X = vectorizer.fit_transform(df_long['hasil_preprocessing'])
+        y = df_long['label_sentimen']
         try:
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
         except:
@@ -118,26 +144,26 @@ if uploaded_file:
         # visualisasi pie chart
         st.subheader("Distribusi Sentimen")
         fig1, ax1 = plt.subplots()
-        df['label_sentimen'].value_counts().plot.pie(autopct='%1.1f%%', colors=['lightgreen', 'salmon'], ax=ax1)
+        df_long['label_sentimen'].value_counts().plot.pie(autopct='%1.1f%%', colors=['lightgreen', 'salmon'], ax=ax1)
         st.pyplot(fig1)
 
         # visualisasi bar chart
         st.subheader("Jumlah Data per Label Sentimen")
         fig2, ax2 = plt.subplots()
-        sns.countplot(x='label_sentimen', data=df, palette='Set2', ax=ax2)
+        sns.countplot(x='label_sentimen', data=df_long, palette='Set2', ax=ax2)
         st.pyplot(fig2)
 
         # visualisasi wordcloud
         st.subheader("WordCloud Opini")
-        all_text = ' '.join(df['hasil_preprocessing'])
+        all_text = ' '.join(df_long['hasil_preprocessing'])
         wc = WordCloud(width=800, height=400, max_words=80, background_color='white').generate(all_text)
         st.image(wc.to_array(), use_container_width=True) 
 
         st.subheader("WordCloud Sentimen Positif & Negatif")
-        positive_text = " ".join(df[df['label_sentimen'] == 'positif']['hasil_preprocessing'])
+        positive_text = " ".join(df_long[df_long['label_sentimen'] == 'positif']['hasil_preprocessing'])
         wordcloud_pos = WordCloud(width=800, height=400, background_color="white", colormap="Greens").generate(positive_text)
 
-        negative_text = " ".join(df[df['label_sentimen'] == 'negatif']['hasil_preprocessing'])
+        negative_text = " ".join(df_long[df_long['label_sentimen'] == 'negatif']['hasil_preprocessing'])
         wordcloud_neg = WordCloud(width=800, height=400, background_color="white", colormap="Reds").generate(negative_text)
 
         col1, col2 = st.columns(2)
@@ -158,7 +184,7 @@ if uploaded_file:
 
         # download file
         excel_buffer = io.BytesIO()
-        df[['Opini', 'label_sentimen']].to_excel(excel_buffer, index=False, sheet_name='Hasil Sentimen')
+        df_long[['Opini', 'label_sentimen']].to_excel(excel_buffer, index=False, sheet_name='Hasil Sentimen')
         excel_buffer.seek(0)
 
         st.download_button(
@@ -168,5 +194,6 @@ if uploaded_file:
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
         )
+
 
 
