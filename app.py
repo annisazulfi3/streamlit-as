@@ -112,7 +112,7 @@ if uploaded_file:
         df_long = df_long.dropna(subset=["Opini"])
         df_long = df_long[df_long["Opini"].astype(str).str.strip() != ""]
 
-        st.write("Contoh data:", df_long.head(),use_container_width=True)
+        st.write("Contoh data:", df_long.head())
 
         if st.button("Jalankan Analisis"):
             with st.spinner("Sedang menjalankan analisis sentimen..."):
@@ -238,3 +238,4 @@ with tab3:
         )
     else:
         st.info("Visualisasi belum tersedia.")
+
