@@ -111,6 +111,7 @@ if uploaded_file:
         # hapus NA / kosong
         df_long = df_long.dropna(subset=["Opini"])
         df_long = df_long[df_long["Opini"].astype(str).str.strip() != ""]
+        df_long = df_long[["Opini"]]
 
         st.write("Contoh data:", df_long.head())
 
@@ -155,7 +156,12 @@ with tab1:
         df_long = st.session_state['df_long']
 
         st.subheader("Contoh Hasil Preprocessing")
-        st.dataframe(st.session_state['df_long'].head())
+        df_long[["Opini", "hasil_preprocessing", "label_sentimen"]]
+        .rename(columns={
+            "hasil_preprocessing": "Hasil Preprocessing",
+            "label_sentimen": "Label Sentimen"
+            }).head()
+         )
     else:
         st.info("Silakan upload data dan jalankan analisis.")
 
@@ -188,12 +194,15 @@ with tab3:
         st.subheader("Distribusi Sentimen")
         fig1, ax1 = plt.subplots()
         df_long['label_sentimen'].value_counts().plot.pie(autopct='%1.1f%%', colors=['lightgreen', 'salmon'], ax=ax1)
+        ax1.set_ylabel("")
         st.pyplot(fig1, use_container_width=True)
 
         # visualisasi bar chart
         st.subheader("Jumlah Data per Label Sentimen")
         fig2, ax2 = plt.subplots()
         sns.countplot(x='label_sentimen', data=df_long, palette='Set2', ax=ax2)
+        ax2.set_ylabel("")
+        ax2.set_xlabel("Sentimen")
         st.pyplot(fig2,use_container_width=True)
 
         # visualisasi wordcloud
@@ -238,4 +247,5 @@ with tab3:
         )
     else:
         st.info("Visualisasi belum tersedia.")
+
 
