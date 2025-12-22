@@ -160,7 +160,8 @@ with tab1:
         .rename(columns={
             "hasil_preprocessing": "Hasil Preprocessing",
             "label_sentimen": "Label Sentimen"
-            }).head())
+            }).head()
+        )
     else:
         st.info("Silakan upload data dan jalankan analisis.")
 
@@ -246,6 +247,7 @@ with tab3:
         )
     else:
         st.info("Visualisasi belum tersedia.")
+
 
 
 
