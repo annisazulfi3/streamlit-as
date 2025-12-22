@@ -156,6 +156,7 @@ with tab1:
         df_long = st.session_state['df_long']
 
         st.subheader("Contoh Hasil Preprocessing")
+        st.dataframe(
         df_long[["Opini", "hasil_preprocessing", "label_sentimen"]]
         .rename(columns={
             "hasil_preprocessing": "Hasil Preprocessing",
@@ -247,6 +248,7 @@ with tab3:
         )
     else:
         st.info("Visualisasi belum tersedia.")
+
 
 
 
