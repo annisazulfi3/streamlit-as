@@ -319,11 +319,11 @@ with tab3:
 
         st.subheader("WordCloud Sentimen Positif & Negatif")
         positive_text = " ".join(df_long[df_long['label_sentimen'] == 'positif']['hasil_preprocessing'])
-        wordcloud_pos = WordCloud(width=800, height=400, background_color="white", colormap="Dark Greens").generate(positive_text)
+        wordcloud_pos = WordCloud(width=800, height=400, background_color="white", colormap="Greens").generate(positive_text)
         top_pos = ", ".join(list(wordcloud_pos.words_.keys())[:3])
 
         negative_text = " ".join(df_long[df_long['label_sentimen'] == 'negatif']['hasil_preprocessing'])
-        wordcloud_neg = WordCloud(width=800, height=400, background_color="white", colormap="Dark Reds").generate(negative_text)
+        wordcloud_neg = WordCloud(width=800, height=400, background_color="white", colormap="Reds").generate(negative_text)
         top_neg = ", ".join(list(wordcloud_neg.words_.keys())[:3])
 
         col1, col2 = st.columns(2)
@@ -372,4 +372,5 @@ with tab3:
         )
     else:
         st.info("Visualisasi belum tersedia.")
+
 
