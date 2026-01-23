@@ -244,7 +244,7 @@ with tab2:
         st.subheader("WordCloud Opini")
         all_text = ' '.join(df_long['hasil_preprocessing'])
         wc = WordCloud(width=800, height=400, max_words=80, background_color='white').generate(all_text)
-        st.image(wc.to_array(), use_container_width=True)
+        st.image(wc.to_array(), use_column_width=True)
 
         top_words = list(wc.words_.keys())[:5]
         top_words_str = ", ".join(top_words)
@@ -280,14 +280,14 @@ with tab2:
             fig, ax = plt.subplots()
             ax.imshow(wordcloud_pos, interpolation="bilinear")
             ax.axis("off")
-            st.pyplot(fig, use_container_width=True)
+            st.pyplot(fig, use_conlumn_width=True)
 
         with col2:
             st.markdown("### Sentimen Negatif")
             fig, ax = plt.subplots()
             ax.imshow(wordcloud_neg, interpolation="bilinear")
             ax.axis("off")
-            st.pyplot(fig, use_container_width=True)
+            st.pyplot(fig, use_conlumn_width=True)
 
         st.markdown(
             f"""
@@ -344,7 +344,7 @@ with tab3:
         ax.set_title('Confusion Matrix')
         ax.set_xlabel('Predicted Label')
         ax.set_ylabel('True Label')
-        st.pyplot(fig, use_container_width=False)
+        st.pyplot(fig, use_column_width=False)
 
         TP = cm[0, 0]
         FN = cm[0, 1]
@@ -387,4 +387,5 @@ with tab3:
         )
     else:
         st.warning("Data belum siap untuk didownload.")
+
 
