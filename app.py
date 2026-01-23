@@ -21,6 +21,11 @@ from indoNLP.preprocessing import replace_slang
 #konfig awal
 st.set_page_config(page_title="Analisis Sentimen", layout="wide")
 
+st.markdown(""" Website ini digunakan untuk melakukan analisis sentimen terhadap data teks secara otomatis. Sistem mengklasifikasikan data teks ke dalam sentimen positif dan negatif menggunakan metode Naïve Bayes.
+
+Pengguna dapat mengunggah data teks dalam format Excel, kemudian sistem akan melakukan proses analisis dan menampilkan hasil klasifikasi sentimen serta visualisasi hasil analisis untuk memudahkan pemahaman pengguna.
+""")
+
 st.markdown("""
 <style>
 .block-container {
@@ -372,5 +377,6 @@ with tab3:
         )
     else:
         st.info("Visualisasi belum tersedia.")
+
 
 
