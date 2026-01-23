@@ -6,9 +6,11 @@ scikit-learn
 seaborn
 matplotlib
 streamlit
+altair==4.2.2
 openpyxl
 indonlp
 wordcloud
+
 
 
 
