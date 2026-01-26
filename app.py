@@ -158,17 +158,17 @@ if uploaded_file:
             st.success("Analisis selesai!")
 
 tab1, tab2, tab3 = st.tabs(
-    ["Preprocessing", "Visualisasi", "Evaluasi"]
+    ["Prapemprosesan", "Visualisasi", "Evaluasi"]
 )
 with tab1:
     if 'df_long' in st.session_state:
         df_long = st.session_state['df_long']
 
-        st.subheader("Contoh Hasil Preprocessing")
+        st.subheader("Contoh Hasil Prapemprosesan")
         st.dataframe(
         df_long[["Opini", "hasil_preprocessing", "label_sentimen"]]
         .rename(columns={
-            "hasil_preprocessing": "Hasil Preprocessing",
+            "hasil_preprocessing": "Hasil Prapemprosesan",
             "label_sentimen": "Label Sentimen"
             }).head())
     else:
@@ -380,13 +380,14 @@ with tab3:
 
         st.markdown("<br><br>", unsafe_allow_html=True)
         st.download_button(
-            label="Download Hasil Labeling Excel",
+            label="Download Hasil Pelabelan",
             data=excel_buffer,
             file_name="hasil_sentimen.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
     else:
         st.warning("Data belum siap untuk didownload.")
+
 
 
 
