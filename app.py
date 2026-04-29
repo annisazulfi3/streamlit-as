@@ -75,7 +75,7 @@ st.markdown("<h1 style='text-align: center;'>Analisis Sentimen Menggunakan Algor
 st.markdown(""" <p style="text-align: center;">
         Website analisis sentimen ini dikembangkan sebagai media implementasi dari metode Naïve Bayes dalam mengklasifikasikan data teks 
             ke dalam sentimen positif dan negatif. Website ini bertujuan untuk memudahkan proses analisis sentimen secara otomatis tanpa memerlukan pengolahan data secara manual.
-            .</p>""", unsafe_allow_html=True)
+            </p>""", unsafe_allow_html=True)
 st.markdown(""" <p style="text-align: center;"> Pengguna dapat mengunggah data teks dalam format Excel, kemudian sistem akan melakukan proses analisis
             dan menampilkan hasil klasifikasi sentimen, evaluasi serta visualisasi hasil analisis untuk memudahkan pemahaman pengguna
         </p>""", unsafe_allow_html=True)
