@@ -39,7 +39,6 @@ st.markdown("---")
 
 st.markdown("""
 <style>
-    /* 1. MENGUNCI WARNA UTAMA WEBSITE (Aplikasi Selalu Abu-Abu Terang) */
     .stApp, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
         background-color: #ebf0f5 !important;
         color: #333333 !important;
@@ -48,17 +47,16 @@ st.markdown("""
     .container {
         display: flex;
         justify-content: center; /*horizontal */
-        height: 50vh;           /* Mengambil tinggi penuh layar */
     }
     [data-testid="stFileUploader"] {
         background-color: #FFFFFF !important;
-        border: 2px dashed #CBD5E1 !important; /* Garis putus-putus khas uploader */
+        border: 2px dashed #CBD5E1 !important;
         border-radius: 12px !important;
         padding: 15px !important;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
     }
     .stTable, .stDataFrame, div[data-testid="stBlock"], 
-    div[data-testid="stExpander"], .stAlert, [data-testid="element-container"] {
+    div[data-testid="stExpander"] {
         background-color: #FFFFFF !important;
         border-radius: 12px !important;
         padding: 12px !important;
