@@ -42,7 +42,7 @@ st.markdown("""
     .stApp, [data-testid="stAppViewContainer"], [data-testid="stApp"] {
         background-color: #ebf0f5 !important;
         color: #333333 !important;
-        padding: 50px !important;
+        padding: 20px !important;
     }
     .container {
         display: flex;
@@ -56,7 +56,7 @@ st.markdown("""
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
     }
     .stTable, .stDataFrame, div[data-testid="stBlock"], 
-    div[data-testid="stExpander"] {
+    div[data-testid="stExpander .stAlert, [data-testid="element-container"] {
         background-color: #FFFFFF !important;
         border-radius: 12px !important;
         padding: 12px !important;
@@ -249,6 +249,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                 df_long['label_sentimen'].value_counts().plot.pie(autopct='%1.1f%%', colors=['lightgreen', 'salmon'], ax=ax1)
                 ax1.set_ylabel("")
                 st.pyplot(fig1, use_container_width=False)
+                plt.clf()
+                plt.close(fig_acc)
 
                 #narasi hasil
                 st.markdown(
@@ -277,6 +279,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                 ax2.set_ylabel("Jumlah")
                 ax2.set_xlabel("Sentimen")       
                 st.pyplot(fig2,use_container_width=False)
+                plt.clf()
+                plt.close(fig_acc)
 
                 st.markdown(
                     f"""
@@ -330,6 +334,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                     ax.imshow(wordcloud_pos, interpolation="bilinear")
                     ax.axis("off")
                     st.pyplot(fig, use_container_width=True)
+                    plt.clf()
+                    plt.close(fig_acc)
 
                 with col2:
                     st.markdown("### Sentimen Negatif")
@@ -337,6 +343,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                     ax.imshow(wordcloud_neg, interpolation="bilinear")
                     ax.axis("off")
                     st.pyplot(fig, use_container_width=True)
+                    plt.clf()
+                    plt.close(fig_acc)
 
                 st.markdown(
                     f"""
@@ -384,6 +392,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                 ax.set_xlabel('Predicted Label')
                 ax.set_ylabel('True Label')
                 st.pyplot(fig, use_container_width=False)
+                plt.clf()
+                plt.close(fig_acc)
 
                 TP = cm[0, 0]
                 FN = cm[0, 1]
@@ -448,6 +458,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                     df_file['label_sentimen'].value_counts().plot.pie(autopct='%1.1f%%', colors=['lightgreen', 'salmon'], ax=ax)
                     ax.set_ylabel("")
                     st.pyplot(fig)
+                    plt.clf()
+                    plt.close(fig_acc)
                     
                 with col_chart2:
                     st.subheader("WordCloud Dominan")
@@ -474,6 +486,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                     ax.imshow(wordcloud_pos, interpolation="bilinear")
                     ax.axis("off")
                     st.pyplot(fig, use_container_width=True)
+                    plt.clf()
+                    plt.close(fig_acc)
                     st.text(f"Kata dominan positif pada file ini: {top_pos}")
                 with col2:
                     st.markdown("### Sentimen Negatif")
@@ -481,6 +495,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                     ax.imshow(wordcloud_neg, interpolation="bilinear")
                     ax.axis("off")
                     st.pyplot(fig, use_container_width=True)
+                    plt.clf()
+                    plt.close(fig_acc)
                     st.text(f"Kata dominan negatif pada file ini: {top_neg}")
 
                 #Evaluasi Model
@@ -512,6 +528,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                     ax.set_xlabel('Predicted Label')
                     ax.set_ylabel('True Label')
                     st.pyplot(fig, use_container_width=False)
+                    plt.clf()
+                    plt.close(fig_acc)
 
                     TP = cm[0, 0]
                     FN = cm[0, 1]
@@ -576,6 +594,8 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                 sns.barplot(x="Nama File", y="Persentase", hue="Sentimen", data=df_melted_perc, palette=['lightgreen', 'salmon'], ax=ax_perc)
                 plt.xticks(rotation=15, ha='right')
                 st.pyplot(fig_perc)
+                plt.clf()
+                plt.close(fig_acc)
 
                 # Cari file paling positif dan paling negatif secara otomatis
                 file_paling_pos = df_compare.loc[df_compare['% Positif'].idxmax()]['Nama File']
@@ -624,7 +644,9 @@ if st.session_state['analisis_selesai'] and st.session_state['daftar_hasil']:
                 ax_acc.set_ylim(0, 1.1)
                 ax_acc.set_ylabel("Nilai Akurasi")
                 ax_acc.set_xlabel("Nama File")
-                st.pyplot(fig_acc, use_container_width=False)       
+                st.pyplot(fig_acc, use_container_width=False) 
+                plt.clf()
+                plt.close(fig_acc)
 
                 idx_tertinggi_acc = df_compare["Akurasi Model"].idxmax() if "Akurasi Model" in df_compare.columns else df_akurasi["Akurasi"].idxmax()
                 file_tertinggi_acc = df_compare.loc[idx_tertinggi_acc]["Nama File"] if "Akurasi Model" in df_compare.columns else df_akurasi.loc[idx_tertinggi_acc]["Nama File"]
